@@ -15,6 +15,7 @@ import {
   selectDamageAmount,
   rollDice,
 } from "./gameSlice";
+import { HealthBar } from "./HealthBar";
 
 const BattleFieldContainer = styled.div`
   display: flex;
@@ -129,12 +130,7 @@ export function Game() {
             <SpriteContainer>
               <CharacterImage src={warrior} />
             </SpriteContainer>
-            <HealthContainer>
-              <HealthBarBox></HealthBarBox>
-              <HealthBarGreenHealth
-                health={playerHealth}
-              ></HealthBarGreenHealth>
-            </HealthContainer>
+            <HealthBar healthAmount={playerHealth} />
             <DiceContainer>
               <Dice></Dice>
               <Dice></Dice>
@@ -160,10 +156,7 @@ export function Game() {
               <Dice></Dice>
               <Dice></Dice>
             </DiceContainer>
-            <HealthContainer>
-              <HealthBarBox></HealthBarBox>
-              <HealthBarGreenHealth health={enemyHealth}></HealthBarGreenHealth>
-            </HealthContainer>
+            <HealthBar healthAmount={enemyHealth} />
             <SpriteContainer>
               <CharacterImage src={enemy} />
             </SpriteContainer>
