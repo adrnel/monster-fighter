@@ -1,11 +1,9 @@
-import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import styled, { keyframes } from 'styled-components'
-import warrior from '../../warrior.png';
-import enemy from '../../enemy.png';
-import {
-  selectCount,
-} from './gameSlice';
+import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import styled, { keyframes } from "styled-components";
+import warrior from "../../warrior.png";
+import enemy from "../../enemy.png";
+import { selectCount } from "./gameSlice";
 
 const BattleFieldContainer = styled.div`
   display: flex;
@@ -40,23 +38,22 @@ const HealthContainer = styled.div`
 `;
 
 const HealthBarBox = styled.div`
-    background-color: #ccc;
-    height: 100%;
-    width: 30px;
-    margin: 0 auto;
-    border: solid 1px #aaa;
+  background-color: #ccc;
+  height: 100%;
+  width: 30px;
+  margin: 0 auto;
+  border: solid 1px #aaa;
 `;
 
-const HealthBarGreenHealth = styled.div<{health: number}>`
-    background-color: #007f00;
-    height: ${(props) => (props.health ? props.health : 100)}%;
-    
-    width: 31px;
-    position: relative;
-    bottom: 1px;
-    left: 0px;
-    transform: rotatex(180deg);
-    transform-origin: top;
+const HealthBarGreenHealth = styled.div<{ health: number }>`
+  background-color: #007f00;
+  height: ${(props) => (props.health ? props.health : 100)}%;
+  width: 31px;
+  position: relative;
+  bottom: 1px;
+  left: 0px;
+  transform: rotatex(180deg);
+  transform-origin: top;
 `;
 
 const DiceContainer = styled.div`
@@ -75,26 +72,25 @@ const rolling = keyframes`
 const Dice = styled.div`
   font-size: 71px;
   font-weight: 800;
-  
+
   ::after {
-    content:'\\2680';
+    content: "\\2680";
   }
 `;
 
 const BattleSection = styled.div`
   display: flex;
-  
-    flex-direction: column;
+  flex-direction: column;
 `;
 
 const BattleTextContainer = styled.div`
-    min-height: 205px;
-    display: flex;
-    align-items: center;
+  min-height: 205px;
+  display: flex;
+  align-items: center;
 `;
 
 const ButtonContainer = styled.div`
-display: flex;
+  display: flex;
   justify-content: center;
   height: 100%;
 `;
@@ -106,26 +102,24 @@ const Button = styled.button`
 export function Game() {
   const count = useSelector(selectCount);
   const dispatch = useDispatch();
-  const [incrementAmount, setIncrementAmount] = useState('2');
+  const [incrementAmount, setIncrementAmount] = useState("2");
 
   return (
     <div>
       <BattleFieldContainer>
         <CharacterInfoContainer>
           <CharacterMainInfoContainer>
-          <SpriteContainer>
-            <CharacterImage src={warrior}/>
-          </SpriteContainer>
-          <HealthContainer>
-            <HealthBarBox>
-
-            </HealthBarBox>
-            <HealthBarGreenHealth health={60}></HealthBarGreenHealth>
-          </HealthContainer>
-          <DiceContainer>
-            <Dice></Dice>
-            <Dice></Dice>
-          </DiceContainer>
+            <SpriteContainer>
+              <CharacterImage src={warrior} />
+            </SpriteContainer>
+            <HealthContainer>
+              <HealthBarBox></HealthBarBox>
+              <HealthBarGreenHealth health={60}></HealthBarGreenHealth>
+            </HealthContainer>
+            <DiceContainer>
+              <Dice></Dice>
+              <Dice></Dice>
+            </DiceContainer>
           </CharacterMainInfoContainer>
           <CharacterNameContainer>
             <h1>player</h1>
@@ -136,7 +130,9 @@ export function Game() {
           <BattleTextContainer>
             <h2>You hit for a 6</h2>
           </BattleTextContainer>
-          <ButtonContainer><Button>attack</Button></ButtonContainer>
+          <ButtonContainer>
+            <Button>attack</Button>
+          </ButtonContainer>
         </BattleSection>
 
         <CharacterInfoContainer>
@@ -146,13 +142,11 @@ export function Game() {
               <Dice></Dice>
             </DiceContainer>
             <HealthContainer>
-              <HealthBarBox>
-
-              </HealthBarBox>
+              <HealthBarBox></HealthBarBox>
               <HealthBarGreenHealth health={60}></HealthBarGreenHealth>
             </HealthContainer>
             <SpriteContainer>
-              <CharacterImage src={enemy}/>
+              <CharacterImage src={enemy} />
             </SpriteContainer>
           </CharacterMainInfoContainer>
           <CharacterNameContainer>
