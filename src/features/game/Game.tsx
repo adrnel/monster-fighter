@@ -2,20 +2,29 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import styled, { keyframes } from 'styled-components'
 import warrior from '../../warrior.png';
-import ogre from '../../ogre.png';
+import enemy from '../../enemy.png';
 import {
   selectCount,
 } from './gameSlice';
 
 const BattleFieldContainer = styled.div`
   display: flex;
-  
   justify-content: space-around;
-  height: 200px;
+  padding-bottom: 20px;
 `;
 
 const CharacterInfoContainer = styled.div`
   display: flex;
+  flex-direction: column;
+`;
+
+const CharacterMainInfoContainer = styled.div`
+  display: flex;
+`;
+
+const CharacterNameContainer = styled.div`
+  display: flex;
+  justify-content: center;
 `;
 
 const SpriteContainer = styled.div`
@@ -36,6 +45,18 @@ const HealthBarBox = styled.div`
     width: 30px;
     margin: 0 auto;
     border: solid 1px #aaa;
+`;
+
+const HealthBarGreenHealth = styled.div<{health: number}>`
+    background-color: #007f00;
+    height: ${(props) => (props.health ? props.health : 100)}%;
+    
+    width: 31px;
+    position: relative;
+    bottom: 1px;
+    left: 0px;
+    transform: rotatex(180deg);
+    transform-origin: top;
 `;
 
 const DiceContainer = styled.div`
@@ -60,15 +81,26 @@ const Dice = styled.div`
   }
 `;
 
+const BattleSection = styled.div`
+  display: flex;
+  
+    flex-direction: column;
+`;
+
 const BattleTextContainer = styled.div`
-  align-self: center;
+    min-height: 205px;
+    display: flex;
+    align-items: center;
 `;
 
 const ButtonContainer = styled.div`
-  display: flex;
-  padding: 20px;
-  
+display: flex;
   justify-content: center;
+  height: 100%;
+`;
+
+const Button = styled.button`
+  align-self: center;
 `;
 
 export function Game() {
@@ -80,6 +112,7 @@ export function Game() {
     <div>
       <BattleFieldContainer>
         <CharacterInfoContainer>
+          <CharacterMainInfoContainer>
           <SpriteContainer>
             <CharacterImage src={warrior}/>
           </SpriteContainer>
@@ -87,33 +120,46 @@ export function Game() {
             <HealthBarBox>
 
             </HealthBarBox>
+            <HealthBarGreenHealth health={60}></HealthBarGreenHealth>
           </HealthContainer>
           <DiceContainer>
             <Dice></Dice>
             <Dice></Dice>
           </DiceContainer>
+          </CharacterMainInfoContainer>
+          <CharacterNameContainer>
+            <h1>player</h1>
+          </CharacterNameContainer>
         </CharacterInfoContainer>
-        <BattleTextContainer>You hit for a 6</BattleTextContainer>
+
+        <BattleSection>
+          <BattleTextContainer>
+            <h2>You hit for a 6</h2>
+          </BattleTextContainer>
+          <ButtonContainer><Button>attack</Button></ButtonContainer>
+        </BattleSection>
 
         <CharacterInfoContainer>
-          <DiceContainer>
-            <Dice></Dice>
-            <Dice></Dice>
-          </DiceContainer>
+          <CharacterMainInfoContainer>
+            <DiceContainer>
+              <Dice></Dice>
+              <Dice></Dice>
+            </DiceContainer>
+            <HealthContainer>
+              <HealthBarBox>
 
-          <HealthContainer>
-
-
-            <HealthBarBox>
-
-            </HealthBarBox>
-          </HealthContainer>
-          <SpriteContainer>
-            <CharacterImage src={ogre}/>
-          </SpriteContainer>
+              </HealthBarBox>
+              <HealthBarGreenHealth health={60}></HealthBarGreenHealth>
+            </HealthContainer>
+            <SpriteContainer>
+              <CharacterImage src={enemy}/>
+            </SpriteContainer>
+          </CharacterMainInfoContainer>
+          <CharacterNameContainer>
+            <h1>enemy</h1>
+          </CharacterNameContainer>
         </CharacterInfoContainer>
       </BattleFieldContainer>
-      <ButtonContainer><button>attack</button></ButtonContainer>
     </div>
   );
 }
