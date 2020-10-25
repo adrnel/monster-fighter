@@ -1,9 +1,20 @@
+// @ts-ignore
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled, { keyframes } from "styled-components";
 import warrior from "../../warrior.png";
 import enemy from "../../enemy.png";
-import { selectCount } from "./gameSlice";
+import {
+  selectPlayerDiceOneValue,
+  selectPlayerDiceTwoValue,
+  selectPlayerHealth,
+  selectEnemyDiceOneValue,
+  selectEnemyDiceTwoValue,
+  selectEnemyHealth,
+  selectIsDiceRolling,
+  selectDamageAmount,
+  rollDice,
+} from "./gameSlice";
 
 const BattleFieldContainer = styled.div`
   display: flex;
@@ -100,9 +111,15 @@ const Button = styled.button`
 `;
 
 export function Game() {
-  const count = useSelector(selectCount);
+  const playerDiceOneValue = useSelector(selectPlayerDiceOneValue);
+  const playerDiceTwoValue = useSelector(selectPlayerDiceTwoValue);
+  const playerHealth = useSelector(selectPlayerHealth);
+  const enemyDiceOneValue = useSelector(selectEnemyDiceOneValue);
+  const enemyDiceTwoValue = useSelector(selectEnemyDiceTwoValue);
+  const enemyHealth = useSelector(selectEnemyHealth);
+  const damageAmount = useSelector(selectDamageAmount);
+  const isDiceRolling = useSelector(selectIsDiceRolling);
   const dispatch = useDispatch();
-  const [incrementAmount, setIncrementAmount] = useState("2");
 
   return (
     <div>
@@ -114,7 +131,9 @@ export function Game() {
             </SpriteContainer>
             <HealthContainer>
               <HealthBarBox></HealthBarBox>
-              <HealthBarGreenHealth health={60}></HealthBarGreenHealth>
+              <HealthBarGreenHealth
+                health={playerHealth}
+              ></HealthBarGreenHealth>
             </HealthContainer>
             <DiceContainer>
               <Dice></Dice>
@@ -131,7 +150,7 @@ export function Game() {
             <h2>You hit for a 6</h2>
           </BattleTextContainer>
           <ButtonContainer>
-            <Button>attack</Button>
+            <Button onClick={() => dispatch(rollDice())}>attack</Button>
           </ButtonContainer>
         </BattleSection>
 
@@ -143,7 +162,7 @@ export function Game() {
             </DiceContainer>
             <HealthContainer>
               <HealthBarBox></HealthBarBox>
-              <HealthBarGreenHealth health={60}></HealthBarGreenHealth>
+              <HealthBarGreenHealth health={enemyHealth}></HealthBarGreenHealth>
             </HealthContainer>
             <SpriteContainer>
               <CharacterImage src={enemy} />

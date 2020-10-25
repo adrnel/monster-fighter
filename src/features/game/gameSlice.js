@@ -1,42 +1,73 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 export const gameSlice = createSlice({
-  name: "counter",
+  name: "game",
   initialState: {
-    value: 0,
+    playerDiceOneValue: 0,
+    playerDiceTwoValue: 0,
+    playerHealth: 100,
+    enemyDiceOneValue: 0,
+    enemyDiceTwoValue: 0,
+    enemyHealth: 100,
+    damageAmount: 0,
+    isDiceRolling: false,
   },
   reducers: {
-    increment: (state) => {
-      // Redux Toolkit allows us to write "mutating" logic in reducers. It
-      // doesn't actually mutate the state because it uses the Immer library,
-      // which detects changes to a "draft state" and produces a brand new
-      // immutable state based off those changes
-      state.value += 1;
+    startRollingDice: (state) => {
+      state.isDiceRolling = true;
+      state.damageAmount = 0;
     },
-    decrement: (state) => {
-      state.value -= 1;
-    },
-    incrementByAmount: (state, action) => {
-      state.value += action.payload;
+    setDiceValue: (state, action) => {
+      state.isDiceRolling = false;
+      state.playerDiceOneValue = action.payload.diceOne;
+      state.playerDiceTwoValue = action.payload.diceTwo;
+      state.enemyDiceOneValue = action.payload.diceThree;
+      state.enemyDiceTwoValue = action.payload.diceFour;
+      const combinedDiceAmount =
+        action.payload.diceOne +
+        action.payload.diceTwo -
+        action.payload.diceThree -
+        action.payload.diceFour;
+      state.damageAmount = combinedDiceAmount;
+      state.playerHealth =
+        combinedDiceAmount < 0
+          ? state.playerHealth + combinedDiceAmount
+          : state.playerHealth;
+      state.enemyHealth =
+        combinedDiceAmount > 0
+          ? state.enemyHealth - combinedDiceAmount
+          : state.enemyHealth;
     },
   },
 });
 
-export const { increment, decrement, incrementByAmount } = gameSlice.actions;
+export const { startRollingDice, setDiceValue } = gameSlice.actions;
 
-// The function below is called a thunk and allows us to perform async logic. It
-// can be dispatched like a regular action: `dispatch(incrementAsync(10))`. This
-// will call the thunk with the `dispatch` function as the first argument. Async
-// code can then be executed and other actions can be dispatched
-export const incrementAsync = (amount) => (dispatch) => {
+export const rollDice = (amount) => (dispatch) => {
+  dispatch(startRollingDice(amount));
   setTimeout(() => {
-    dispatch(incrementByAmount(amount));
-  }, 1000);
+    dispatch(
+      setDiceValue({
+        diceOne: getRandomDiceValue(),
+        diceTwo: getRandomDiceValue(),
+        diceThree: getRandomDiceValue(),
+        diceFour: getRandomDiceValue(),
+      })
+    );
+  }, 2000);
 };
 
-// The function below is called a selector and allows us to select a value from
-// the state. Selectors can also be defined inline where they're used instead of
-// in the slice file. For example: `useSelector((state) => state.counter.value)`
-export const selectCount = (state) => state.counter.value;
+const getRandomDiceValue = () => Math.floor(Math.random() * 6) + 1;
+
+export const selectPlayerDiceOneValue = (state) =>
+  state.game.playerDiceOneValue;
+export const selectPlayerDiceTwoValue = (state) =>
+  state.game.playerDiceTwoValue;
+export const selectPlayerHealth = (state) => state.game.playerHealth;
+export const selectEnemyDiceOneValue = (state) => state.game.enemyDiceOneValue;
+export const selectEnemyDiceTwoValue = (state) => state.game.enemyDiceTwoValue;
+export const selectEnemyHealth = (state) => state.game.enemyHealth;
+export const selectDamageAmount = (state) => state.game.damageAmount;
+export const selectIsDiceRolling = (state) => state.game.isDiceRolling;
 
 export default gameSlice.reducer;
