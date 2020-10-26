@@ -19,11 +19,17 @@ import {
 import { HealthBar } from "./HealthBar";
 import { Dice } from "./Dice";
 import { BattleText } from "./BattleText";
+import { DESKTOP_BREAK_POINT } from "./constants";
 
 const BattleFieldContainer = styled.div`
   display: flex;
   justify-content: space-around;
   padding-bottom: 20px;
+  flex-direction: column-reverse;
+
+  @media only screen and (min-width: ${DESKTOP_BREAK_POINT}px) {
+    flex-direction: row;
+  }
 `;
 
 const CharacterInfoContainer = styled.div`
@@ -33,6 +39,7 @@ const CharacterInfoContainer = styled.div`
 
 const CharacterMainInfoContainer = styled.div`
   display: flex;
+  justify-content: center;
 `;
 
 const CharacterNameContainer = styled.div`
@@ -62,9 +69,14 @@ const ButtonContainer = styled.div`
 const Button = styled.button<{ disabled: boolean }>`
   align-self: center;
   background-color: ${(props) => (props.disabled ? "grey" : "green")};
-    height: 40px;
-    padding: 10px;
-    border-radius: 20px;
+  height: 40px;
+  padding: 10px 30px;
+  border-radius: 20px;
+  margin-bottom: 40px;
+    
+  @media only screen and (min-width: ${DESKTOP_BREAK_POINT}px) {
+    margin-bottom: 0;
+  }
 }
 `;
 

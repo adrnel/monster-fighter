@@ -30,12 +30,12 @@ const HealthBarGreenHealth = styled.div<{ health: number }>`
   left: 0px;
   transform: rotatex(180deg);
   transform-origin: top;
-  transition: transform 0.35s ease-in-out;
+  transition: height 0.25s linear;
 `;
 
 interface HealthBarObject {
   healthAmount: number;
-  isPlayer: boolean;
+  isPlayer?: boolean;
 }
 
 export const HealthBar: React.FC<HealthBarObject> = ({

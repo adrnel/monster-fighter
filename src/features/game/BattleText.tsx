@@ -5,16 +5,21 @@ import {
   STARTING_PLAYER_HEALTH,
   STARTING_ENEMY_HEALTH,
   textMap,
+  DESKTOP_BREAK_POINT,
 } from "./constants";
 
 const BattleTextContainer = styled.div`
-  min-height: 205px;
   display: flex;
   align-items: center;
   flex-direction: column;
   width: 200px;
   text-align: center;
   justify-content: center;
+  align-self: center;
+
+  @media only screen and (min-width: ${DESKTOP_BREAK_POINT}px) {
+    min-height: 205px;
+  }
 `;
 
 const BattleFinishedTextContainer = styled.div<{ isWinner: boolean }>`
