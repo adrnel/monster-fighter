@@ -1,5 +1,5 @@
-export const STARTING_PLAYER_HEALTH = 10;
-export const STARTING_ENEMY_HEALTH = 10;
+export const STARTING_PLAYER_HEALTH = 100;
+export const STARTING_ENEMY_HEALTH = 100;
 export const DESKTOP_BREAK_POINT = 1000;
 
 export const textMap = {
