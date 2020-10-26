@@ -1,6 +1,6 @@
 // @ts-ignore
 import React from "react";
-import styled, { keyframes } from "styled-components";
+import styled, { keyframes, css } from "styled-components";
 
 interface StringArray {
   [index: number]: string;
@@ -28,13 +28,21 @@ const rolling = keyframes`
   100% {content:'\\2685';}
 `;
 
-const Die = styled.div<{ value?: number }>`
+const Die = styled.div<{ value?: number, isRolling?: boolean }>`
   font-size: 71px;
   font-weight: 800;
 
   ::after {
     content: "${(props) => (props.value ? contentMap[props.value] : "\\2680")}";
+      ${({isRolling}) =>
+    isRolling &&
+    css`
+    content: "";
+      animation: ${rolling} 2s linear infinite;
+    `};
+
   }
+
 `;
 
 interface DiceObject {
@@ -50,8 +58,8 @@ export const Dice: React.FC<DiceObject> = ({
 }: DiceObject) => {
   return (
     <DiceContainer>
-      <Die value={dieOneValue} />
-      <Die value={dieTwoValue} />
+      <Die value={dieOneValue} isRolling={isRolling} />
+      <Die value={dieTwoValue} isRolling={isRolling}  />
     </DiceContainer>
   );
 };

@@ -30,6 +30,7 @@ const HealthBarGreenHealth = styled.div<{ health: number }>`
   left: 0px;
   transform: rotatex(180deg);
   transform-origin: top;
+  transition: transform .35s ease-in-out;
 `;
 
 interface HealthBarObject {
