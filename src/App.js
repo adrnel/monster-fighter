@@ -24,7 +24,7 @@ function App() {
         <TitleContainer>
           <h1>Battle Simulator</h1>
         </TitleContainer>
-        <Game></Game>
+        <Game />
       </GameWindow>
     </GameContainer>
   );

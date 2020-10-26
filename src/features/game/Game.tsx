@@ -16,6 +16,7 @@ import {
   rollDice,
 } from "./gameSlice";
 import { HealthBar } from "./HealthBar";
+import { Dice } from "./Dice";
 
 const BattleFieldContainer = styled.div`
   display: flex;
@@ -43,51 +44,6 @@ const SpriteContainer = styled.div`
 
 const CharacterImage = styled.img`
   max-height: 201px;
-`;
-
-const HealthContainer = styled.div`
-  padding: 0 20px;
-`;
-
-const HealthBarBox = styled.div`
-  background-color: #ccc;
-  height: 100%;
-  width: 30px;
-  margin: 0 auto;
-  border: solid 1px #aaa;
-`;
-
-const HealthBarGreenHealth = styled.div<{ health: number }>`
-  background-color: #007f00;
-  height: ${(props) => (props.health ? props.health : 100)}%;
-  width: 31px;
-  position: relative;
-  bottom: 1px;
-  left: 0px;
-  transform: rotatex(180deg);
-  transform-origin: top;
-`;
-
-const DiceContainer = styled.div`
-  padding: 0 20px;
-`;
-
-const rolling = keyframes`
-  0% {content:'\\2680';}
-  20% {content:'\\2681';}
-  40% {content:'\\2682';}
-  60% {content:'\\2683';}
-  80% {content:'\\2684';}
-  100% {content:'\\2685';}
-`;
-
-const Dice = styled.div`
-  font-size: 71px;
-  font-weight: 800;
-
-  ::after {
-    content: "\\2680";
-  }
 `;
 
 const BattleSection = styled.div`
@@ -131,10 +87,11 @@ export function Game() {
               <CharacterImage src={warrior} />
             </SpriteContainer>
             <HealthBar healthAmount={playerHealth} />
-            <DiceContainer>
-              <Dice></Dice>
-              <Dice></Dice>
-            </DiceContainer>
+            <Dice
+              dieOneValue={playerDiceOneValue}
+              dieTwoValue={playerDiceTwoValue}
+              isRolling={isDiceRolling}
+            />
           </CharacterMainInfoContainer>
           <CharacterNameContainer>
             <h1>player</h1>
@@ -143,7 +100,7 @@ export function Game() {
 
         <BattleSection>
           <BattleTextContainer>
-            <h2>You hit for a 6</h2>
+            <h2>You hit for a {damageAmount}</h2>
           </BattleTextContainer>
           <ButtonContainer>
             <Button onClick={() => dispatch(rollDice())}>attack</Button>
@@ -152,10 +109,11 @@ export function Game() {
 
         <CharacterInfoContainer>
           <CharacterMainInfoContainer>
-            <DiceContainer>
-              <Dice></Dice>
-              <Dice></Dice>
-            </DiceContainer>
+            <Dice
+              dieOneValue={enemyDiceOneValue}
+              dieTwoValue={enemyDiceTwoValue}
+              isRolling={isDiceRolling}
+            />
             <HealthBar healthAmount={enemyHealth} />
             <SpriteContainer>
               <CharacterImage src={enemy} />
