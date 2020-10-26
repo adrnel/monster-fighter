@@ -17,6 +17,10 @@ const BattleTextContainer = styled.div`
   justify-content: center;
 `;
 
+const BattleFinishedTextContainer = styled.div<{ isWinner: boolean }>`
+  color: ${(props) => (props.isWinner ? "green" : "red")};
+`;
+
 interface BattleTextObject {
   damageAmount: number;
   playerHealth: number;
@@ -47,9 +51,9 @@ export const BattleText: React.FC<BattleTextObject> = ({
         <h2>{`${hitText}${damageAmount ? Math.abs(damageAmount) : ""}`}</h2>
       </div>
       {isGameFinished && (
-        <div>
+        <BattleFinishedTextContainer isWinner={enemyHealth <= 0}>
           <h1>{finishText}</h1>
-        </div>
+        </BattleFinishedTextContainer>
       )}
     </BattleTextContainer>
   );

@@ -1,7 +1,7 @@
 // @ts-ignore
-import React, { useState } from "react";
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 import warrior from "../../warrior.png";
 import enemy from "../../enemy.png";
 import {

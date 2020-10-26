@@ -23,14 +23,14 @@ const HealthBarBox = styled.div`
 
 const HealthBarGreenHealth = styled.div<{ health: number }>`
   background-color: #007f00;
-  height: calc(${(props) => (props.health ? props.health : 0)}% - 2px);
+  height: calc(${(props) => (props.health ? props.health : 0)}% - 1px);
   width: 31px;
   position: relative;
   bottom: 1px;
   left: 0px;
   transform: rotatex(180deg);
   transform-origin: top;
-  transition: transform .35s ease-in-out;
+  transition: transform 0.35s ease-in-out;
 `;
 
 interface HealthBarObject {

@@ -28,21 +28,19 @@ const rolling = keyframes`
   100% {content:'\\2685';}
 `;
 
-const Die = styled.div<{ value?: number, isRolling?: boolean }>`
+const Die = styled.div<{ value?: number; isRolling?: boolean }>`
   font-size: 71px;
   font-weight: 800;
 
   ::after {
     content: "${(props) => (props.value ? contentMap[props.value] : "\\2680")}";
-      ${({isRolling}) =>
-    isRolling &&
-    css`
-    content: "";
-      animation: ${rolling} 2s linear infinite;
-    `};
-
+    ${({ isRolling }) =>
+      isRolling &&
+      css`
+        content: "";
+        animation: ${rolling} 2s linear infinite;
+      `};
   }
-
 `;
 
 interface DiceObject {
@@ -59,7 +57,7 @@ export const Dice: React.FC<DiceObject> = ({
   return (
     <DiceContainer>
       <Die value={dieOneValue} isRolling={isRolling} />
-      <Die value={dieTwoValue} isRolling={isRolling}  />
+      <Die value={dieTwoValue} isRolling={isRolling} />
     </DiceContainer>
   );
 };
