@@ -14,9 +14,11 @@ import {
   selectIsDiceRolling,
   selectDamageAmount,
   rollDice,
+  restartGame,
 } from "./gameSlice";
 import { HealthBar } from "./HealthBar";
 import { Dice } from "./Dice";
+import { BattleText } from "./BattleText";
 
 const BattleFieldContainer = styled.div`
   display: flex;
@@ -51,20 +53,19 @@ const BattleSection = styled.div`
   flex-direction: column;
 `;
 
-const BattleTextContainer = styled.div`
-  min-height: 205px;
-  display: flex;
-  align-items: center;
-`;
-
 const ButtonContainer = styled.div`
   display: flex;
   justify-content: center;
   height: 100%;
 `;
 
-const Button = styled.button`
+const Button = styled.button<{ disabled: boolean }>`
   align-self: center;
+  background-color: ${(props) => (props.disabled ? "grey" : "green")};
+    height: 40px;
+    padding: 10px;
+    border-radius: 20px;
+}
 `;
 
 export function Game() {
@@ -77,6 +78,8 @@ export function Game() {
   const damageAmount = useSelector(selectDamageAmount);
   const isDiceRolling = useSelector(selectIsDiceRolling);
   const dispatch = useDispatch();
+
+  const isGameFinished = playerHealth <= 0 || enemyHealth <= 0;
 
   return (
     <div>
@@ -99,11 +102,24 @@ export function Game() {
         </CharacterInfoContainer>
 
         <BattleSection>
-          <BattleTextContainer>
-            <h2>You hit for a {damageAmount}</h2>
-          </BattleTextContainer>
+          <BattleText
+            damageAmount={damageAmount}
+            playerHealth={playerHealth}
+            enemyHealth={enemyHealth}
+            isRolling={isDiceRolling}
+            isGameFinished={isGameFinished}
+          />
           <ButtonContainer>
-            <Button onClick={() => dispatch(rollDice())}>attack</Button>
+            <Button
+              disabled={isDiceRolling}
+              onClick={() => {
+                return isGameFinished
+                  ? dispatch(restartGame())
+                  : dispatch(rollDice());
+              }}
+            >
+              {isGameFinished ? "RESTART" : "ATTACK"}
+            </Button>
           </ButtonContainer>
         </BattleSection>
 

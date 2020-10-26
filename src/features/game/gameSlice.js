@@ -1,14 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { STARTING_PLAYER_HEALTH, STARTING_ENEMY_HEALTH } from "./constants";
 
 export const gameSlice = createSlice({
   name: "game",
   initialState: {
     playerDiceOneValue: 0,
     playerDiceTwoValue: 0,
-    playerHealth: 100,
+    playerHealth: STARTING_PLAYER_HEALTH,
     enemyDiceOneValue: 0,
     enemyDiceTwoValue: 0,
-    enemyHealth: 100,
+    enemyHealth: STARTING_ENEMY_HEALTH,
     damageAmount: 0,
     isDiceRolling: false,
   },
@@ -38,10 +39,24 @@ export const gameSlice = createSlice({
           ? state.enemyHealth - combinedDiceAmount
           : state.enemyHealth;
     },
+    restartGame: (state) => {
+      state.playerDiceOneValue = 0;
+      state.playerDiceTwoValue = 0;
+      state.playerHealth = STARTING_PLAYER_HEALTH;
+      state.enemyDiceOneValue = 0;
+      state.enemyDiceTwoValue = 0;
+      state.enemyHealth = STARTING_ENEMY_HEALTH;
+      state.damageAmount = false;
+      state.isDiceRolling = false;
+    },
   },
 });
 
-export const { startRollingDice, setDiceValue } = gameSlice.actions;
+export const {
+  startRollingDice,
+  setDiceValue,
+  restartGame,
+} = gameSlice.actions;
 
 export const rollDice = (amount) => (dispatch) => {
   dispatch(startRollingDice(amount));
