@@ -1,7 +1,6 @@
 // @ts-ignore
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import styled from "styled-components";
 import warrior from "../../warrior.png";
 import enemy from "../../enemy.png";
 import {
@@ -19,66 +18,18 @@ import {
 import { HealthBar } from "./HealthBar";
 import { Dice } from "./Dice";
 import { BattleText } from "./BattleText";
-import { DESKTOP_BREAK_POINT } from "./constants";
 
-const BattleFieldContainer = styled.div`
-  display: flex;
-  justify-content: space-around;
-  padding-bottom: 20px;
-  flex-direction: column-reverse;
-
-  @media only screen and (min-width: ${DESKTOP_BREAK_POINT}px) {
-    flex-direction: row;
-  }
-`;
-
-const CharacterInfoContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-const CharacterMainInfoContainer = styled.div`
-  display: flex;
-  justify-content: center;
-`;
-
-const CharacterNameContainer = styled.div`
-  display: flex;
-  justify-content: center;
-`;
-
-const SpriteContainer = styled.div`
-  padding: 0 20px;
-`;
-
-const CharacterImage = styled.img`
-  max-height: 201px;
-`;
-
-const BattleSection = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-const ButtonContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  height: 100%;
-`;
-
-const Button = styled.button<{ disabled: boolean }>`
-  align-self: center;
-  background-color: ${(props) => (props.disabled ? "grey" : "green")};
-  height: 40px;
-  padding: 10px 30px;
-  border-radius: 20px;
-  margin-bottom: 40px;
-    
-  @media only screen and (min-width: ${DESKTOP_BREAK_POINT}px) {
-    margin-bottom: 0;
-  }
-}
-`;
+import {
+  BattleFieldContainer,
+  CharacterInfoContainer,
+  CharacterMainInfoContainer,
+  SpriteContainer,
+  CharacterImage,
+  CharacterNameContainer,
+  BattleSection,
+  ButtonContainer,
+  Button,
+} from "./styledComponents";
 
 export function Game() {
   const playerDiceOneValue = useSelector(selectPlayerDiceOneValue);
